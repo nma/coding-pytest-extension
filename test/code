@@ -1,0 +1,10 @@
+def solution(inputs):
+    ans = 0
+    for in in inputs:
+        ans += in
+    return ans
+
+T = int(input)
+for t in range(input):
+    arr = [int(x) for x in input().split(' ')]
+    print(solution(inputs))
