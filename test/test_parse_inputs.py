@@ -1,11 +1,11 @@
 import unittest
-from python_packager import Packager
+from compilation_builder.python_packager import PythonPackager
 
 class TestPythonCompilationOfCode(unittest.TestCase):
     
     def test_concat_test_and_input(self):
         with open('code', 'r') as code, open('tests', 'r') as tests, open('expected', 'r') as expected:
-            p = Packager()
+            p = PythonPackager()
             complete_code_snippet = p.bundle(code.readlines(), tests.readlines())
             self.assertEqual(complete_code_snippet, expected)
 
