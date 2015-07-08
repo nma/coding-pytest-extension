@@ -1,5 +1,5 @@
 import hashlib, os, unittest
-from compilation_builder.python_packager import Packager
+from compilation_builder.python_packager import Packager, PythonPackager
 from test.base_test_case import BaseTestCase
 
 
@@ -12,14 +12,24 @@ class TestPythonCompilationOfCode(BaseTestCase):
 
         self.assertEqual(got_hash, exp_hash, "hash string not the same")
 
-        #Packager.generate_key()
+        exp_hash2 = hashlib.md5(str(test_question_name + "_1").encode('utf-8')).hexdigest()
+        got_hash2 = Packager.generate_key_with_versioning(test_question_name, 1)
 
-        #Packager.generate_key_with_versioning()
+        self.assertEqual(got_hash2, exp_hash2, "hash string not the same")
+        self.assertNotEqual(got_hash2, exp_hash, "versioned hash string should be different from default hash string")
 
-    @unittest.skip
-    def test_concat_test_and_input(self):
-        pass
-        
+    def test_bundle_code_and_test(self):
+        test_question_name = "foo"
+        with open(self.get_file('code'), 'r') as code, open(self.get_file('tests'), 'r') as test:
+            p = PythonPackager(self.packager_config)
+            key = p.bundle(test_question_name, code.read(), test.read())
+            
+            code_file = os.path.join(self.packager_config.get_code_folder(), key)
+            test_file = os.path.join(self.packager_config.get_test_folder(), key)
+ 
+            self.assertTrue(os.path.exists(code_file))
+            self.assertTrue(os.path.exists(test_file)) 
+
     @unittest.skip
     def test_compile_and_execute_python_code(self):
         with open(self.get_file('expected'), 'r') as expected:

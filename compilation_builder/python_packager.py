@@ -22,11 +22,22 @@ class PackagerConfig(object):
             os.makedirs(self.get_test_folder())
             os.makedirs(self.get_code_folder())
 
+    def __write_to_location(self, folder, key, content):
+        file_path = os.path.join(folder, key)
+        with open(file_path, 'w') as output:
+            output.write(content)
+
     def get_test_folder(self):
         return os.path.join(self.root, self.pyconfigs['DEFAULT']['test'])
 
     def get_code_folder(self):
         return os.path.join(self.root, self.pyconfigs['DEFAULT']['code'])
+
+    def save_in_test_folder(self, key, content):
+        self.__write_to_location(self.get_test_folder(), key, content)
+
+    def save_in_code_folder(self, key, content):
+        self.__write_to_location(self.get_code_folder(), key, content)
 
     def purge_directories(self):
         if self.pyconfigs['DEFAULT']['allow_purge']:
@@ -51,16 +62,29 @@ class Packager(object):
         """
         return hashlib.md5(name.encode('utf-8')).hexdigest()
 
+    @staticmethod
+    def generate_key_with_versioning(name, version):
+        """Appends a versioning value to the class
+        """
+        versioned_name = name + "_" + str(version)
+        return Packager.generate_key(versioned_name) 
+
 
 class PythonPackager(Packager):
-    """
+    """The PythonPackager will hash the code and tests into 2 seperate folders with unique names.
+    Will create versioning when requested, otherwise will default to version 1.
     """
 
-    def bundle(self, question_name, code_str, test_str):
-       key = Packager.generate_key(question_name) 
+    def bundle(self, question_name, code_str, test_str, version=1):
+        key = Packager.generate_key_with_versioning(question_name, version) 
+        self.packager_config.save_in_code_folder(key, code_str)
+        self.packager_config.save_in_test_folder(key, test_str)
+        return key
 
 
 class JavaPackager(Packager):
     """TODO: build out java land
     """
-    pass
+
+    def bundle(self, question_name, code_str, test_str, version=1):
+        pass
