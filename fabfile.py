@@ -5,3 +5,6 @@ from fabric.operations import local
 def test():
     local('python -m unittest discover')
 
+@task
+def test_single(name):
+    local('python -m unittest test.{}'.format(name))
