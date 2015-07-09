@@ -1,25 +1,19 @@
-test_code = '''
-def solution(inputs):
-    ans = 0
-    for in in inputs:
-        ans += in
-    return ans
+QUESTION = "foo"
+VERSION = 1
+KEY = "a231267a7324b146da0afcb839611e41"    
 
-T = int(input)
-for t in range(input):
-    arr = [int(x) for x in input().split(' ')]
-    print(solution(inputs))
-'''
-def run_solution(input):
-    code = compile(test_code)
-    #exec(code)
+import unittest, subprocess
 
-class TestSolution(unittest.TestCase):
+def solution(input):
+    solutionfile = KEY 
+    proc = subprocess.Popen('python solutionfile', stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    proc.stdin.write(input)
+    out, err = p.communicate()
+    return out
+
+class TestFoo(unittest.TestCase):
     
-    def setUp(self):
-        self.test_code = compile(test_code)
-
-    def test_answer(self):
+    def test_simple(self):
         input = '''
         1
         1 2 3 4 5 6 7 8 9 10
@@ -27,7 +21,4 @@ class TestSolution(unittest.TestCase):
         output = '''
         55
         '''
-        run_solution(input)
-
-if __name__ == '__main__':
-    unittest.main()
+        self.assertEquals(output, solution(input))

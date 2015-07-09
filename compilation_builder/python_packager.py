@@ -75,10 +75,36 @@ class PythonPackager(Packager):
     Will create versioning when requested, otherwise will default to version 1.
     """
 
+    def __construct_meta_data(self, question_name, version):
+        return """QUESTION = "{}"
+VERSION = {}
+KEY = "{}"    
+""".format(question_name, version, Packager.generate_key_with_versioning(question_name, version))
+
+    def __get_solution_block(self):
+        return """
+import unittest, subprocess
+
+def solution(input):
+    solutionfile = KEY 
+    proc = subprocess.Popen('python solutionfile', stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    proc.stdin.write(input)
+    out, err = p.communicate()
+    return out
+
+"""
+
+    def __update_test_contents(self, question_name, version, test_str):
+        updated_test_str = self.__construct_meta_data(question_name, version) + \
+                self.__get_solution_block() + \
+                test_str
+        return updated_test_str
+
     def bundle(self, question_name, code_str, test_str, version=1):
         key = Packager.generate_key_with_versioning(question_name, version) 
         self.packager_config.save_in_code_folder(key, code_str)
-        self.packager_config.save_in_test_folder(key, test_str)
+        updated_test_str = self.__update_test_contents(question_name, version, test_str)
+        self.packager_config.save_in_test_folder(key, updated_test_str) 
         return key
 
 
@@ -88,3 +114,6 @@ class JavaPackager(Packager):
 
     def bundle(self, question_name, code_str, test_str, version=1):
         pass
+
+if __name__ == "__main__":
+    print(Packager.generate_key_with_versioning("foo", 1))
