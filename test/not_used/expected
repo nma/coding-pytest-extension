@@ -1,0 +1,24 @@
+QUESTION = "foo"
+VERSION = 1
+KEY = "a231267a7324b146da0afcb839611e41"    
+
+import unittest, subprocess
+
+def solution(input):
+    solutionfile = KEY 
+    proc = subprocess.Popen('python ' + solutionfile, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    proc.stdin.write(input)
+    out, err = p.communicate()
+    return out
+
+class TestFoo(unittest.TestCase):
+    
+    def test_simple(self):
+        input = '''
+        1
+        1 2 3 4 5 6 7 8 9 10
+        '''
+        output = '''
+        55
+        '''
+        self.assertEquals(output, solution(input))

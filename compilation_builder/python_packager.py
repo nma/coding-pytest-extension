@@ -76,28 +76,13 @@ class PythonPackager(Packager):
     """
 
     def __construct_meta_data(self, question_name, version):
-        return """QUESTION = "{}"
-VERSION = {}
-KEY = "{}"    
+        return """#QUESTION = "{}"
+#VERSION = {}
+#KEY = "{}"    
 """.format(question_name, version, Packager.generate_key_with_versioning(question_name, version))
 
-    def __get_solution_block(self):
-        return """
-import unittest, subprocess
-
-def solution(input):
-    solutionfile = KEY 
-    proc = subprocess.Popen('python solutionfile', stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-    proc.stdin.write(input)
-    out, err = p.communicate()
-    return out
-
-"""
-
     def __update_test_contents(self, question_name, version, test_str):
-        updated_test_str = self.__construct_meta_data(question_name, version) + \
-                self.__get_solution_block() + \
-                test_str
+        updated_test_str = self.__construct_meta_data(question_name, version) + test_str
         return updated_test_str
 
     def bundle(self, question_name, code_str, test_str, version=1):
