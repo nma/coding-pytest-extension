@@ -60,8 +60,7 @@ class TestPythonCompilationOfCode(BaseTestCase):
             self.assertEqual(got_test_output, exp_test_output)
 
     def test_compile_failure(self):
-        self.maxDiff = None
-        test_question_name = "foo_fail"
+        test_question_name = "foo_compile_fail"
         with open(self.get_file('compilation_error'), 'r') as code, open(self.get_file('tests'), 'r') as test:
             p = PythonPackager(self.packager_config)
             bundle = p.bundle(test_question_name, code.read(), test.read())
@@ -84,7 +83,15 @@ class TestPythonCompilationOfCode(BaseTestCase):
                 for word in exp_key_words:
                     self.assertTrue(word in got_test_case_message) 
 
-    @unittest.skip
     def test_test_case_failure(self):
-        pass
+        test_question_name = "foo_test_fail"
+        with open(self.get_file('code'), 'r') as code, open(self.get_file('failing_tests'), 'r') as test:
+            p = PythonPackager(self.packager_config)
+            bundle = p.bundle(test_question_name, code.read(), test.read())
 
+            got_test_output = p.execute(bundle)
+            exp_test_output = {
+                    "testFail": {"success": False, "message": "Got Output: 6\nExpected Output: 2\n Errors: None"}
+            }
+
+            self.assertEqual(got_test_output, exp_test_output)

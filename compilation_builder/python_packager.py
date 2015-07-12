@@ -156,7 +156,7 @@ class PythonPackager(Packager):
                         #err = re.escape(err)
                     else:
                         err = 'None'
-                    message = "Output: " + out + " Errors: " + err
+                    message = "Got Output: " + out + "Expected Output: " + test_io['output']  + " Errors: " + err
                 execution_response[testcase] = {"success": status, "message": message}
             except Exception:
                 raise PackagerException("I dun goofed during execution")
