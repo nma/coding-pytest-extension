@@ -3,8 +3,11 @@ import os
 import shutil
 import hashlib
 import yaml
+import subprocess
 
 class PackagerException(Exception):
+    """I am a nicer looking exception
+    """
     pass
 
 
@@ -43,6 +46,8 @@ class PackagerConfig(object):
         self.__write_to_location(self.get_code_folder(), key, content)
 
     def purge_directories(self):
+        """Config dependant purging methods
+        """
         if self.pyconfigs['DEFAULT']['allow_purge']:
            shutil.rmtree(self.root) 
         else:
@@ -52,6 +57,8 @@ class PackagerConfig(object):
 class Packager(object):
     """The base packager factory for creating and retrieving packaged code/test pairs.
     Contains a staticmethod to create unit key based on question name.
+    The Packager will hash the code and tests into 2 seperate folders with unique names.
+    Will create versioning when requested, otherwise will default to version 1.
     """
     def __init__(self, packager_config):
         self.set_configs(packager_config) 
@@ -78,21 +85,16 @@ class Packager(object):
         """
         versioned_name = name + "_" + str(version)
         return Packager.generate_key(versioned_name) 
-
-
-class Bundle(object):
-    """Model defining a bundle of code, with an accompanyment of tests inputs
-    """
-    def __init__(self, key, code_folder, test_folder):
-        self.key = key
-        self.test_file_path = os.path.join(test_folder, key) 
-        self.code_file_path = os.path.join(code_folder, key)
-
-
-class PythonPackager(Packager):
-    """The PythonPackager will hash the code and tests into 2 seperate folders with unique names.
-    Will create versioning when requested, otherwise will default to version 1.
-    """
+    
+    def bundle(self, question_name, code_str, test_str, version=1):
+        """makes a bundle that contains the correct metadata and saveds the strings into the correct key 
+        """
+        key = Packager.generate_key_with_versioning(question_name, version) 
+        updated_test_str = self.__update_file_contents(question_name, version, test_str)
+        self.packager_config.save_in_test_folder(key, updated_test_str) 
+        self.packager_config.save_in_code_folder(key, code_str)
+        return self.__get_bundle(key) 
+    
     def __construct_meta_data(self, question_name, version):
         return """#QUESTION = "{}"
 #VERSION = {}
@@ -113,20 +115,53 @@ class PythonPackager(Packager):
 
         return Bundle(key, code_folder, test_folder)
 
-    def bundle(self, question_name, code_str, test_str, version=1):
-        """makes a bundle that contains the correct metadata and saveds the strings into the correct key 
-        """
-        key = Packager.generate_key_with_versioning(question_name, version) 
-        updated_test_str = self.__update_file_contents(question_name, version, test_str)
-        self.packager_config.save_in_test_folder(key, updated_test_str) 
-        self.packager_config.save_in_code_folder(key, code_str)
-        return self.__get_bundle(key) 
 
-    def execute_bundle(self, key):
+class Bundle(object):
+    """Model defining a bundle of code, with an accompanyment of tests inputs
+    """
+    def __init__(self, key, code_folder, test_folder):
+        self.key = key
+        self.test_file_path = os.path.join(test_folder, key) 
+        self.code_file_path = os.path.join(code_folder, key)
+
+
+class PythonPackager(Packager):
+    """extension of the Packager class to support python execution
+    """
+
+    def execute(self, bundle):
         """Given a key, locate the bundle in the storage system, and execute it.
         """
-        bundle = self.__get_bundle(key)
+        execution_response = {}
         test_cases_dict = Packager.parse_testcases(bundle)
+        for testcase, test_io in test_cases_dict.items():
+            try:
+                codefile = bundle.code_file_path
+                # pipe the input and output into the code files
+                proc = subprocess.Popen(['python', codefile], stdin=subprocess.PIPE, \
+                                                              stdout=subprocess.PIPE, \
+                                                              stderr=subprocess.PIPE)
+                proc.stdin.write(bytes(test_io['input'], 'UTF-8'))
+                out, err = proc.communicate()
+                out = out.decode("UTF-8")
+
+                if out == test_io['output']: 
+                    status = True
+                    message = None
+                else:
+                    status = False
+                    if err:
+                        err = err.decode("UTF-8")
+                        #import re
+                        #err = re.escape(err)
+                    else:
+                        err = 'None'
+                    message = "Output: " + out + " Errors: " + err
+                execution_response[testcase] = {"success": status, "message": message}
+            except Exception:
+                raise PackagerException("I dun goofed during execution")
+        
+        return execution_response
 
 
 class JavaPackager(Packager):
@@ -137,4 +172,6 @@ class JavaPackager(Packager):
         pass
 
 if __name__ == "__main__":
+    """Testing key. Run this file directly to see a outputted key
+    """
     print(Packager.generate_key_with_versioning("foo", 1))

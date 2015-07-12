@@ -23,6 +23,8 @@ class TestStaticMethods(unittest.TestCase):
 class TestPythonCompilationOfCode(BaseTestCase):
 
     def test_bundle_code_and_test_then_execute(self):
+        #uncomment this to let unittest print unlimited stacktraces
+        #self.maxDiff = None
         test_question_name = "foo"
         with open(self.get_file('code'), 'r') as code, open(self.get_file('tests'), 'r') as test:
             p = PythonPackager(self.packager_config)
@@ -49,11 +51,38 @@ class TestPythonCompilationOfCode(BaseTestCase):
 
                 self.assertEqual(got_test_cases, exp_test_cases) 
 
-            #p.execute(bundle)
+            got_test_output = p.execute(bundle)
+            exp_test_output = {
+                    "testSimple": {"success": True, "message": None},
+                    "testMultiSimple": {"success": True, "message": None}
+            }
 
-    @unittest.skip
+            self.assertEqual(got_test_output, exp_test_output)
+
     def test_compile_failure(self):
-        test_question_name = "foo"
+        self.maxDiff = None
+        test_question_name = "foo_fail"
+        with open(self.get_file('compilation_error'), 'r') as code, open(self.get_file('tests'), 'r') as test:
+            p = PythonPackager(self.packager_config)
+            bundle = p.bundle(test_question_name, code.read(), test.read())
+
+            compile_error_keywords = ["Traceback", "builtin_function_or_method", "TypeError", "int()"]
+
+            got_test_output = p.execute(bundle)
+            exp_test_output = {
+                    "testSimple": {"success": False, "message": compile_error_keywords},
+                    "testMultiSimple": {"success": False, "message": compile_error_keywords}
+            }
+            
+            for testcase, test_case_result in got_test_output.items():
+                got_test_case_message = test_case_result['message']
+
+                self.assertFalse(test_case_result['success'])
+                self.assertIsNotNone(test_case_result['message'])
+
+                exp_key_words = exp_test_output[testcase]['message']
+                for word in exp_key_words:
+                    self.assertTrue(word in got_test_case_message) 
 
     @unittest.skip
     def test_test_case_failure(self):

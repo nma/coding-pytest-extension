@@ -1,10 +1,10 @@
 def solution(inputs):
     ans = 0
-    for in in inputs:
-        ans += in
+    for i in inputs:
+        ans += i
     return ans
 
-T = int(input)
-for t in range(input):
+T = int(input())
+for t in range(T):
     arr = [int(x) for x in input().split(' ')]
-    print(solution(inputs))
+    print(solution(arr))
