@@ -26,18 +26,20 @@ class TestPythonCompilationOfCode(BaseTestCase):
         test_question_name = "foo"
         with open(self.get_file('code'), 'r') as code, open(self.get_file('tests'), 'r') as test:
             p = PythonPackager(self.packager_config)
-            key = p.bundle(test_question_name, code.read(), test.read())
+            bundle = p.bundle(test_question_name, code.read(), test.read())
             
-            code_file = os.path.join(self.packager_config.get_code_folder(), key)
-            test_file = os.path.join(self.packager_config.get_test_folder(), key)
+            code_file = bundle.code_file_path 
+            test_file = bundle.test_file_path
  
             self.assertTrue(os.path.exists(code_file))
             self.assertTrue(os.path.exists(test_file)) 
             
-            with open(test_file, 'r') as test, open(self.get_file('expected'), 'r') as expected_test:
+            with open(test_file, 'r') as test, open(self.get_file('expected_test_str'), 'r') as expected_test, \
+                 open(code_file, 'r') as code, open(self.get_file('expected_code_str'), 'r') as expected_code:
                 self.assertEqual(test.read(), expected_test.read())
-            
-            #result = p.execute(key)
+                self.assertEqual(code.read(), expected_code.read())
+
+            #p.execute(bundle)
 
     @unittest.skip
     def test_compile_failure(self):

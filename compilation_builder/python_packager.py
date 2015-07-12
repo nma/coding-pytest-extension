@@ -23,6 +23,8 @@ class PackagerConfig(object):
             os.makedirs(self.get_code_folder())
 
     def __write_to_location(self, folder, key, content):
+        """May be exteneded to write to a storage service.
+        """
         file_path = os.path.join(folder, key)
         with open(file_path, 'w') as output:
             output.write(content)
@@ -70,6 +72,14 @@ class Packager(object):
         return Packager.generate_key(versioned_name) 
 
 
+class Bundle(object):
+    """Model defining a bundle of code, with an accompanyment of tests inputs
+    """
+    def __init__(self, key, code_folder, test_folder):
+        self.key = key
+        self.test_file_path = os.path.join(test_folder, key) 
+        self.code_file_path = os.path.join(code_folder, key)
+
 class PythonPackager(Packager):
     """The PythonPackager will hash the code and tests into 2 seperate folders with unique names.
     Will create versioning when requested, otherwise will default to version 1.
@@ -81,16 +91,32 @@ class PythonPackager(Packager):
 #KEY = "{}"    
 """.format(question_name, version, Packager.generate_key_with_versioning(question_name, version))
 
-    def __update_test_contents(self, question_name, version, test_str):
-        updated_test_str = self.__construct_meta_data(question_name, version) + test_str
-        return updated_test_str
+    def __update_file_contents(self, question_name, version, file_str):
+        updated_str = self.__construct_meta_data(question_name, version) + file_str 
+        return updated_str
+
+    def __get_bundle(self, key):
+        """return a bundle object for a given key.
+        """
+        code_folder = self.packager_config.get_code_folder()
+        test_folder = self.packager_config.get_test_folder()
+        if not (os.path.exists(os.path.join(code_folder, key)) and os.path.exists(os.path.join(test_folder, key))):
+            raise PackagerException("Bundle with key=" + key + " not found.")
+
+        return Bundle(key, code_folder, test_folder)
 
     def bundle(self, question_name, code_str, test_str, version=1):
         key = Packager.generate_key_with_versioning(question_name, version) 
         self.packager_config.save_in_code_folder(key, code_str)
-        updated_test_str = self.__update_test_contents(question_name, version, test_str)
+        updated_test_str = self.__update_file_contents(question_name, version, test_str)
+        updated_code_str = self.__update_file_contents(question_name, version, code_str)
         self.packager_config.save_in_test_folder(key, updated_test_str) 
-        return key
+        return self.__get_bundle(key) 
+
+    def execute_bundle(self, key):
+        """Given a key, locate the bundle in the storage system, and execute it.
+        """
+        bundle = self.__get_bundle(key)
 
 
 class JavaPackager(Packager):
