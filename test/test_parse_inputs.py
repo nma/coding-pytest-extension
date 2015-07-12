@@ -1,4 +1,4 @@
-import hashlib, os, unittest
+import hashlib, os, unittest, yaml
 from compilation_builder.python_packager import Packager, PythonPackager
 from test.base_test_case import BaseTestCase
 
@@ -33,15 +33,29 @@ class TestPythonCompilationOfCode(BaseTestCase):
  
             self.assertTrue(os.path.exists(code_file))
             self.assertTrue(os.path.exists(test_file)) 
-            
+
             with open(test_file, 'r') as test, open(self.get_file('expected_test_str'), 'r') as expected_test, \
                  open(code_file, 'r') as code, open(self.get_file('expected_code_str'), 'r') as expected_code:
-                self.assertEqual(test.read(), expected_test.read())
+                
+                # cache it to use later
+                # TODO: if we .read() it again, it doesn't get the same data? (why?)
+                expected_test_str = expected_test.read()
+                
+                self.assertEqual(test.read(), expected_test_str)
                 self.assertEqual(code.read(), expected_code.read())
+
+                exp_test_cases = yaml.load(expected_test_str)
+                got_test_cases = Packager.parse_testcases(bundle)                
+
+                self.assertEqual(got_test_cases, exp_test_cases) 
 
             #p.execute(bundle)
 
     @unittest.skip
     def test_compile_failure(self):
         test_question_name = "foo"
+
+    @unittest.skip
+    def test_test_case_failure(self):
+        pass
 

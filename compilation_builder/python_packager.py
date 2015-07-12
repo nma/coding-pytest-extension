@@ -2,6 +2,7 @@ import configparser
 import os
 import shutil
 import hashlib
+import yaml
 
 class PackagerException(Exception):
     pass
@@ -59,6 +60,13 @@ class Packager(object):
         self.packager_config = packager_config
 
     @staticmethod
+    def parse_testcases(bundle):
+       """parses the yaml of the test file and returns a list of test input output
+       """
+       with open(bundle.test_file_path, 'r') as testcases:
+           return yaml.load(testcases)
+
+    @staticmethod
     def generate_key(name):
         """Uses simple hashlib methods to create a unique ID for this question.
         """
@@ -80,11 +88,11 @@ class Bundle(object):
         self.test_file_path = os.path.join(test_folder, key) 
         self.code_file_path = os.path.join(code_folder, key)
 
+
 class PythonPackager(Packager):
     """The PythonPackager will hash the code and tests into 2 seperate folders with unique names.
     Will create versioning when requested, otherwise will default to version 1.
     """
-
     def __construct_meta_data(self, question_name, version):
         return """#QUESTION = "{}"
 #VERSION = {}
@@ -106,17 +114,19 @@ class PythonPackager(Packager):
         return Bundle(key, code_folder, test_folder)
 
     def bundle(self, question_name, code_str, test_str, version=1):
+        """makes a bundle that contains the correct metadata and saveds the strings into the correct key 
+        """
         key = Packager.generate_key_with_versioning(question_name, version) 
-        self.packager_config.save_in_code_folder(key, code_str)
         updated_test_str = self.__update_file_contents(question_name, version, test_str)
-        updated_code_str = self.__update_file_contents(question_name, version, code_str)
         self.packager_config.save_in_test_folder(key, updated_test_str) 
+        self.packager_config.save_in_code_folder(key, code_str)
         return self.__get_bundle(key) 
 
     def execute_bundle(self, key):
         """Given a key, locate the bundle in the storage system, and execute it.
         """
         bundle = self.__get_bundle(key)
+        test_cases_dict = Packager.parse_testcases(bundle)
 
 
 class JavaPackager(Packager):
