@@ -6,7 +6,6 @@ import os
 class BaseTestCase(unittest.TestCase):
     """Basic compilation of reusable test compononets
     """
-
     def setUp(self):
         # get the current directory of this test file
         self.test_directory = os.path.dirname(os.path.realpath(__file__))
