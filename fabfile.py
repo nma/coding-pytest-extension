@@ -7,4 +7,4 @@ def test():
 
 @task
 def test_single(name):
-    local('python -m unittest test.{}'.format(name))
+    local('python -m unittest {}'.format(name))
