@@ -31,18 +31,19 @@ class TestOrchestrator(BaseTestCase):
         """
         cls.p.terminate()
 
-    def testOrchestratorAcceptingInput(self):
+    def testOrchestratorAcceptingInputCorrectly(self):
         with open(self.get_file('code'), 'r') as code, open(self.get_file('tests'), 'r') as test:
             language = 'python'
+            question_name = 'foo'
             code_payload = code.read()
             test_payload = test.read()
-            payload = {'language': language, 'code': code_payload, 'test': test_payload}
+            payload = {'question_name': question_name, 'language': language, 'code': code_payload, 'test': test_payload}
            
             # http:// required, requests library needs protocol scheme to connect
             got_resp = requests.post('http://127.0.0.1:5000/submit', data=payload)
-            exp_data = {'language': language, 'code': code_payload, 'test': test_payload}
-            exp_response_message = '' 
-            exp_resp = {'response': exp_response_message, 'got_data': exp_data}
+            exp_data = {'language': language, 'code': code_payload, 'test': test_payload, 'question_name': question_name}
+            exp_response_message = 'not tested for in this testcase' 
+            exp_resp = {'execution_result': exp_response_message, 'got_data': exp_data}
 
-            self.assertEquals(exp_resp, json.loads(got_resp.text))
+            self.assertEqual(exp_resp['got_data'], json.loads(got_resp.text)['got_data'])
             

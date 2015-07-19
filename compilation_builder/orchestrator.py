@@ -14,25 +14,30 @@ class Orchestrator(object):
         ])
 
     def on_getresult(self, request):
-        return Response()
+        return Response("not implemented")
 
     def on_submit(self, request):
+        question_name = ''
         lang = ''
         code = ''
         test = ''
-        response = ''
+        execution_result = ''
         if request.method == 'POST':
+            question_name = request.form['question_name']
             lang = request.form['language']
             code = request.form['code']
             test = request.form['test']
 
             if lang.lower() == 'python':
                 py_packager = PythonPackager(self.configs)
+                bundle = py_packager.bundle(question_name, code, test)
+                
+                execution_result = py_packager.execute(bundle)
             else:
                raise PackagerException("Unexpected language type.")
 
-        got_data = {'language': lang, 'code': code, 'test': test}
-        response_payload = {'response': response, 'got_data': got_data}
+        got_data = {'language': lang, 'code': code, 'test': test, 'question_name': question_name}
+        response_payload = {'execution_result': execution_result, 'got_data': got_data}
         # dispatch_request expects any response object or throws an exception
         return Response(json.dumps(response_payload), mimetype='text/json')
 

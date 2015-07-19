@@ -93,7 +93,7 @@ class Packager(object):
         updated_test_str = self.__update_file_contents(question_name, version, test_str)
         self.packager_config.save_in_test_folder(key, updated_test_str) 
         self.packager_config.save_in_code_folder(key, code_str)
-        return self.__get_bundle(key) 
+        return self.get_bundle(key) 
     
     def __construct_meta_data(self, question_name, version):
         return """#QUESTION = "{}"
@@ -105,7 +105,7 @@ class Packager(object):
         updated_str = self.__construct_meta_data(question_name, version) + file_str 
         return updated_str
 
-    def __get_bundle(self, key):
+    def get_bundle(self, key):
         """return a bundle object for a given key.
         """
         code_folder = self.packager_config.get_code_folder()
