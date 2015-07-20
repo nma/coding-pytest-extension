@@ -40,10 +40,15 @@ class TestOrchestrator(BaseTestCase):
             payload = {'question_name': question_name, 'language': language, 'code': code_payload, 'test': test_payload}
            
             # http:// required, requests library needs protocol scheme to connect
-            got_resp = requests.post('http://127.0.0.1:5000/submit', data=payload)
+            got_resp_raw = requests.post('http://127.0.0.1:5000/submit', data=payload)
+            got_resp = json.loads(got_resp_raw.text)
             exp_data = {'language': language, 'code': code_payload, 'test': test_payload, 'question_name': question_name}
             exp_response_message = 'not tested for in this testcase' 
             exp_resp = {'execution_result': exp_response_message, 'got_data': exp_data}
 
-            self.assertEqual(exp_resp['got_data'], json.loads(got_resp.text)['got_data'])
-            
+            self.assertEqual(exp_resp['got_data'], got_resp['got_data'])
+
+            # we just need to check if the result contains success
+            for testcase, test_result in got_resp['execution_result'].items():
+                self.assertTrue(test_result['success'], \
+                        'testcase {} failure with message {}'.format(testcase, test_result['message']))
