@@ -19,6 +19,13 @@
         overflow: hidden;
         max-width: 400px;
       }
+      .scrollabletextbox {
+        height:100px;
+        width:200px;
+        font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif;
+        font-size: 82%;
+        overflow:scroll;
+      }
     </style>
 
     <!--
@@ -30,8 +37,27 @@
     <script src="popup.js"></script>
   </head>
   <body>
-    <div id="status"></div>
-    <img id="image-result" hidden>
+    <form id="pycoding-extension-submit-form" >
+      Question Name:<br>
+      <input type="text" name="question_name"/>
+      <br>
+      <select name="language">
+        <option value="python"
+      </select>
+      <br>
+      Code:<br>
+      <textarea class="scrollabletextbox" name="code">
+      </textarea>
+      <br>
+      Test:<br>
+      <textarea class="scrollabletextbox" name="test">
+      </textarea>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+    Response:<br>
+    <div id="pycoding-extension-response" class="scrollabletextbox">
+    </div>
   </body>
 </html>
 
