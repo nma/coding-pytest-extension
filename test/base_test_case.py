@@ -1,5 +1,5 @@
 import unittest
-from compilation_builder.python_packager import PackagerConfig
+from compilation_builder.packager import PackagerConfig
 import os
 
 

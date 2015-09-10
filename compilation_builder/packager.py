@@ -4,6 +4,7 @@ import shutil
 import hashlib
 import yaml
 import subprocess
+from compilation_builder.executor import SandboxedExecutor, Executor
 
 class PackagerException(Exception):
     """I am a nicer looking exception
@@ -132,34 +133,14 @@ class PythonPackager(Packager):
     def execute(self, bundle):
         """Given a key, locate the bundle in the storage system, and execute it.
         """
-        execution_response = {}
         test_cases_dict = Packager.parse_testcases(bundle)
+        execution_response = {}
         for testcase, test_io in test_cases_dict.items():
             try:
-                codefile = bundle.code_file_path
-                # pipe the input and output into the code files
-                proc = subprocess.Popen(['python', codefile], stdin=subprocess.PIPE, \
-                                                              stdout=subprocess.PIPE, \
-                                                              stderr=subprocess.PIPE)
-                proc.stdin.write(bytes(test_io['input'], 'UTF-8'))
-                out, err = proc.communicate()
-                out = out.decode("UTF-8")
-
-                if out == test_io['output']: 
-                    status = True
-                    message = None
-                else:
-                    status = False
-                    if err:
-                        err = err.decode("UTF-8")
-                        #import re
-                        #err = re.escape(err)
-                    else:
-                        err = 'None'
-                    message = "Got Output: " + out + "Expected Output: " + test_io['output']  + " Errors: " + err
-                execution_response[testcase] = {"success": status, "message": message}
+                executor = Executor()
+                execution_response[testcase] = executor.execute(bundle.code_file_path, test_io)
             except Exception:
-                raise PackagerException("I dun goofed during execution")
+                raise PackagerException("I dun goofed during execution of testcase: {}".format(testcase))
         
         return execution_response
 

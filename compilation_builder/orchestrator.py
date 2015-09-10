@@ -1,7 +1,7 @@
 from werkzeug.wrappers import Request, Response
 from werkzeug.exceptions import HTTPException, NotFound
 from werkzeug.routing import Map, Rule
-from compilation_builder.python_packager import PythonPackager, PackagerException
+from compilation_builder.packager import PythonPackager, PackagerException
 import json
 
 class Orchestrator(object):

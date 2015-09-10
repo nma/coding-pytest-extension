@@ -1,4 +1,4 @@
-from compilation_builder.python_packager import PackagerConfig
+from compilation_builder.packager import PackagerConfig
 from compilation_builder.orchestrator import Orchestrator
 from test.base_test_case import BaseTestCase
 from werkzeug.wrappers import Request
