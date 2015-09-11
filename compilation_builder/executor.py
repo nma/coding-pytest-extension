@@ -28,5 +28,8 @@ class Executor(object):
             message = "Got Output: " + out + "Expected Output: " + test_io['output']  + " Errors: " + err
         return {"success": status, "message": message}
 
+
 class SandboxedExecutor(Executor):
-    pass
+    
+    def execute(self, codefile, test_io):
+        pass
