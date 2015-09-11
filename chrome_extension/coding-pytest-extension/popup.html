@@ -28,6 +28,7 @@
       }
     </style>
 
+    <script src="bower_components/jquery-2.1.4.min/index.js"></script>
     <!--
       - JavaScript and HTML must be in separate files: see our Content Security
       - Policy documentation[1] for details and explanation.
@@ -37,12 +38,13 @@
     <script src="popup.js"></script>
   </head>
   <body>
-    <form id="pycoding-extension-submit-form" >
+    <form id="pycoding-extension-submit-form" action="POST">
       Question Name:<br>
       <input type="text" name="question_name"/>
       <br>
+      Language: <br>
       <select name="language">
-        <option value="python"
+        <option value="python">python</option>
       </select>
       <br>
       Code:<br>

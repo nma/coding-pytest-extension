@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Python Coding Test",
-  "description": "This posts a request at a testing service.",
+  "description": "This posts a request at the testing service defined on heroku",
   "version": "1.0",
 
   "browser_action": {
@@ -11,6 +11,18 @@
     "default_title": "Click here!"
   },
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "<all_urls>"
+  ],
+  "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["popup.js",
+        "bower_components/jquery-2.1.4.min/index.js"
+         ]
+      }
+   ],
+  "web_accessible_resources": [
+    "template.html"
   ]
 }
