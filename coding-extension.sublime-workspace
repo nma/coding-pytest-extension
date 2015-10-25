@@ -1,0 +1,432 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"dMatrix",
+				"dMatrixRes"
+			],
+			[
+				"dM",
+				"dMatrixRes"
+			],
+			[
+				"bui",
+				"build_android"
+			],
+			[
+				"eve",
+				"event_mood"
+			],
+			[
+				"mini",
+				"minion_ip"
+			],
+			[
+				"pro",
+				"provider"
+			],
+			[
+				"Event",
+				"EventLog"
+			],
+			[
+				"e",
+				"eventList"
+			],
+			[
+				"event_",
+				"event_set"
+			],
+			[
+				"Even",
+				"EventLog"
+			],
+			[
+				"Ee",
+				"EventLog"
+			],
+			[
+				"state",
+				"state_name"
+			],
+			[
+				"start",
+				"start_state"
+			],
+			[
+				"max_",
+				"max_int"
+			],
+			[
+				"Binar",
+				"BinaryPrefixTreeNode"
+			],
+			[
+				"None",
+				"None"
+			],
+			[
+				"Bin",
+				"BinaryPrefixTreeNode"
+			],
+			[
+				"get",
+				"get_bit"
+			],
+			[
+				"Pre",
+				"PrefixTreeNode"
+			],
+			[
+				"enco",
+				"encounteredFcnList"
+			],
+			[
+				"has",
+				"hasMatch"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "Pl",
+		"selected_items":
+		[
+			[
+				"Pl",
+				"Package Control: Install Package"
+			],
+			[
+				"Install",
+				"Package Control: Install Package"
+			],
+			[
+				"Ins",
+				"Package Control: Install Package"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"Pack",
+				"Package Control: Install Package"
+			],
+			[
+				"Pac",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Package Control: Remove Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 467.0
+	},
+	"console":
+	{
+		"height": 120.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/nickma/workspace/coding-pytest-extension"
+	],
+	"file_history":
+	[
+		"/Users/nickma/workspace/cloaked-cyril/sheet_rock_locations/index.html",
+		"/Users/nickma/Desktop/CenturyLinkWrapup",
+		"/usr/local/workspace/coding-pytest-extension/chrome_extension/coding-pytest-extension/popup.html",
+		"/usr/local/workspace/coding-pytest-extension/chrome_extension/coding-pytest-extension/popup.js",
+		"/usr/local/workspace/coding-pytest-extension/chrome_extension/coding-pytest-extension/template.html",
+		"/usr/local/workspace/coding-pytest-extension/chrome_extension/coding-pytest-extension/manifest.json",
+		"/Users/nickma/Library/Application Support/Sublime Text 3/Packages/DashDoc/DashDoc.sublime-settings",
+		"/Users/nickma/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Applications/wordpress-4.2.3-0/apps/wordpress/conf/httpd-vhosts.conf",
+		"/Applications/wordpress-4.2.3-0/apps/wordpress/conf/httpd-prefix.conf",
+		"/Applications/wordpress-4.2.3-0/apps/wordpress/conf/httpd-app.conf",
+		"/Applications/wordpress-4.2.3-0/apps/wordpress/conf/htaccess.conf",
+		"/usr/local/workspace/map-ui-lib/src/js/views/map/LayerControlView.js",
+		"/usr/local/workspace/map-ui-lib/src/js/router.js",
+		"/usr/local/workspace/map-ui-lib/src/js/app.js",
+		"/usr/local/workspace/map-ui-lib/src/js/views/map/GoogleMapView.js",
+		"/usr/local/workspace/map-ui-lib/src/js/views/FooterView.js",
+		"/Users/nickma/Downloads/sleep_cycle_ds.json",
+		"/usr/local/workspace/interviewcode/python/coins_on_the_table_v1.py",
+		"/usr/local/workspace/testbuoy/www/ui-components.html",
+		"/usr/local/workspace/testbuoy/www/js/views/shop.js",
+		"/usr/local/workspace/testbuoy/www/js/collections/places.js",
+		"/usr/local/workspace/testbuoy/www/js/models/place.js",
+		"/usr/local/workspace/testbuoy/www/js/configs/base.js",
+		"/usr/local/workspace/testbuoy/www/css/styles.css",
+		"/usr/local/workspace/testbuoy/www/backend_frontend_connection_test.html",
+		"/usr/local/workspace/testbuoy/www/js/lib/jquery-mobile/README.md",
+		"/usr/local/workspace/testbuoy/www/js/backend_frontend_connection_test.html",
+		"/usr/local/workspace/testbuoy/www/js/models/store.js",
+		"/usr/local/workspace/cloaked-cyril/resume.html",
+		"/Users/nickma/Library/Application Support/Sublime Text 3/Packages/User/Terminality.sublime-settings",
+		"/Users/nickma/Library/Application Support/Sublime Text 3/Packages/Terminality/Terminality.sublime-settings",
+		"/Users/nickma/Library/Application Support/Sublime Text 3/Packages/Terminality/Default (OSX).sublime-keymap",
+		"/Users/nickma/Library/Application Support/Sublime Text 3/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/nickma/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/usr/local/workspace/aws-scripts/iam-bootstrap.sh",
+		"/usr/local/workspace/interviewcode/python/combinations.py",
+		"/usr/local/workspace/buoy-server/buoyserver/Vagrantfile",
+		"/Users/nickma/Downloads/mcdowella/uk/co/demon/mcdowella/algorithms/AllPairs.java",
+		"/Users/nickma/Desktop/buoyFiddle",
+		"/Users/nickma/Desktop/2014_tax/moving_air_recipt",
+		"/usr/local/workspace/design_proj/hexagonknights/hexagonknights/src/com/me/hexagonknights/screens/BattleScreenGroup.java",
+		"/usr/local/workspace/design_proj/hexagonknights/hexagonknights/src/com/me/hexagonknights/utils/MyPacker.java",
+		"/usr/local/workspace/design_proj/hexagonknights/hexagonknights/src/com/me/hexagonknights/player/ActiveMercenary.java",
+		"/usr/local/workspace/design_proj/hexagonknights/hexagonknights/src/com/me/hexagonknights/battlemap/BattleGroup.java",
+		"/usr/local/workspace/design_proj/hexagonknights/hexagonknights/src/com/me/hexagonknights/battlemap/BattleGroupController.java",
+		"/usr/local/workspace/design_proj/hexagonknights/hexagonknights/src/com/me/hexagonknights/battlemap/BattleMap.java",
+		"/usr/local/workspace/design_proj/hexagonknights/hexagonknights/src/com/me/hexagonknights/battlemap/BattleMapObject.java",
+		"/usr/local/workspace/design_proj/hexagonknights/hexagonknights/src/com/me/hexagonknights/battlemap/BattleRenderer.java",
+		"/usr/local/workspace/design_proj/hexagonknights/hexagonknights/src/com/me/hexagonknights/HexagonKnightsGame.java",
+		"/usr/local/workspace/design_proj/hexagonknights/hexagonknights/src/com/me/hexagonknights/screens/AbstractScreen.java",
+		"/usr/local/workspace/design_proj/hexagonknights/hexagonknights/src/com/me/hexagonknights/screens/BattleScreen.java",
+		"/usr/local/workspace/design_proj/hexagonknights/hexagonknights/src/com/me/hexagonknights/player/Player.java",
+		"/usr/local/workspace/mood-notes/emoticons.jpg",
+		"/usr/local/workspace/mood-notes/moodnotes/settings.py",
+		"/usr/local/workspace/nba_enemy_tracker/nba_enemy_tracker/static/js/models/league.js",
+		"/usr/local/workspace/me-track/config.py",
+		"/usr/local/workspace/kubernetes/Vagrantfile",
+		"/usr/local/workspace/nma.github.io/_posts/2014-08-22-testing-kubernetes-with-vagrant-and-aws.md",
+		"/Users/nickma/Library/Application Support/Sublime Text 3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/Users/nickma/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/usr/local/workspace/mood-notes/requirements.txt",
+		"/usr/local/workspace/mood-notes/mood-notes.sublime-project",
+		"/usr/local/workspace/mood-notes/happy_events_log/admin.py",
+		"/usr/local/workspace/mood-notes/happy_events_log/__init__.py",
+		"/usr/local/workspace/opensource/redmine/VagrantFile",
+		"/usr/local/workspace/opensource/redmine/bitnami-bootstrap.sh",
+		"/usr/local/workspace/mood-notes/happy_events_log/views.py",
+		"/Users/nickma/Library/Application Support/Sublime Text 3/Packages/User/Python.sublime-settings",
+		"/Users/nickma/Library/Application Support/Sublime Text 3/Packages/User/Distraction Free.sublime-settings",
+		"/Users/nickma/Library/Application Support/Sublime Text 3/Packages/User/Ruby.sublime-settings",
+		"/Users/nickma/Library/Application Support/Sublime Text 3/Packages/Package Control/Package Control.sublime-settings",
+		"/usr/local/workspace/mood-notes/.pydevproject",
+		"/usr/local/workspace/mood-notes/happy_events_log/models.py",
+		"/usr/local/workspace/mood-notes/happy_events_log/tests.py",
+		"/usr/local/workspace/cloaked-cyril/ideas/Mood Notes",
+		"/usr/local/workspace/cloaked-cyril/ideas/Super Ergonauts",
+		"/usr/local/workspace/cloaked-cyril/ideas/ClickBank_test",
+		"/usr/local/workspace/cloaked-cyril/ideas/Algee",
+		"/usr/local/workspace/nma.github.io/_posts/2014-07-02-wordpress-on-dokku-with-vagrant-devo.md",
+		"/usr/local/workspace/cloaked-cyril/interviewcode/maxxor.py",
+		"/usr/local/workspace/cloaked-cyril/kruskalAlg.py",
+		"/usr/local/workspace/nba_enemy_tracker/nba_enemy_tracker/backend/backend.py",
+		"/usr/local/workspace/nba_enemy_tracker/nba_enemy_tracker/app_util.py",
+		"/usr/local/workspace/pcy-packaging/PCY Packaging Buisness Plan",
+		"/usr/local/workspace/pcy-packaging/product-list",
+		"/usr/local/workspace/pcy-packaging/wp-app_env",
+		"/usr/local/workspace/cloaked-cyril/interviewcode/Max_XOr",
+		"/usr/local/workspace/keyboard-shop/SuperErgonauts",
+		"/usr/local/workspace/pcy-packaging/wp-config.php",
+		"/usr/local/workspace/shitty-game/index.html",
+		"/Users/nickma/Desktop/final ting_solns",
+		"/Users/nickma/Desktop/final ting",
+		"/Users/nickma/Desktop/US_2013_tax/2012_returned_values",
+		"/Users/nickma/Desktop/US_2013_tax/exemptions.txt",
+		"/Users/nickma/Desktop/US_2013_tax/itemized_deductions.txt",
+		"/usr/local/workspace/school-work/se-project/invariant/src/CallGraphParser.java",
+		"/usr/local/workspace/school-work/se-project/invariant/src/FunctionCounter.java",
+		"/usr/local/workspace/school-work/se-project/src/CallGraphParser.java",
+		"/usr/local/workspace/school-work/se-project/src/Node.java",
+		"/usr/local/workspace/school-work/cs454/a3/test_rpc.cpp",
+		"/usr/local/workspace/school-work/cs454/a3/test.c",
+		"/usr/local/workspace/school-work/se465/HashTable.java",
+		"/usr/local/workspace/school-work/cs454/a2_milestone/server.cpp",
+		"/usr/local/workspace/school-work/cs454/a2_milestone/webserver.cpp",
+		"/usr/local/workspace/school-work/cs454/a2_milestone/Makefile",
+		"/usr/local/workspace/school-work/se465/SweetHome3D-3.7-src/src/com/eteks/sweethome3d/viewcontroller/PlanController.java",
+		"/usr/local/workspace/school-work/se465/SweetHome3D-3.7-src/Sublime Text.app/Contents/SharedSupport/bin/subl"
+	],
+	"find":
+	{
+		"height": 22.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"side_bar",
+			"populateTeams",
+			"getJson",
+			"authenticate",
+			"		   console.log('mouse over registed');",
+			"change",
+			"click",
+			"# -*- mode: ruby -*-\n# vi: set ft=ruby :\n\n# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!\nVAGRANTFILE_API_VERSION = \"2\"\n\n# Require a recent version of vagrant otherwise some have reported errors setting host names on boxes\nVagrant.require_version \">= 1.6.2\"\n\nVagrant.configure(VAGRANTFILE_API_VERSION) do |config|\n\n  # The number of minions to provision\n  num_minion = (ENV['KUBERNETES_NUM_MINIONS'] || 1).to_i\n\n  # Determine the OS platform to use\n  kube_os = ENV['KUBERNETES_OS'] || \"ubuntu\"\n\n  # Root user\n  root_user = ENV['ROOT_USER'] || \"ubuntu\"\n\n  # ip configuration\n  master_ip = \"172.31.1.2\"\n  minion_ip_base = \"172.31.2.\"\n  minion_ips = num_minion.times.collect { |n| minion_ip_base + \"#{n+2}\" }\n  minion_ips_str = minion_ips.join(\",\")\n\n  # Force default box to a dummy to use AWS\n  config.vm.box = \"dummy\"\n  config.vm.box_url = \"https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box\"\n\n  config.vm.provider :aws do |aws, override|\n    aws.access_key_id = \"AKIAIWVBV7X6MDU3UBPQ\"\n    aws.secret_access_key = \"Jqm7+qdILFsfIj6gEf7UjXv68p1ojV25MJg2QEbw\"\n\n    aws.region = \"us-west-2\"\n    aws.availability_zone = \"us-west-2c\"\n    aws.ami = \"ami-cc8de6fc\" # fedora\n\n    aws.keypair_name = \"nick-oregon\"\n    aws.instance_type = \"t1.micro\"\n    aws.security_groups = [\"sg-52169437\"]\n    aws.subnet_id = \"subnet-f2b9e399\"\n    \n    aws.user_data = \"#!/bin/bash\\n yum -y install rsync\"\n\n    override.ssh.private_key_path = \"~/Downloads/nick-oregon.pem\"\n    override.ssh.username = \"#{root_user}\"\n    override.ssh.pty = true\n  end\n\n  # Kubernetes master\n  config.vm.define \"master\" do |config|\n\n    config.vm.provider :aws do |aws|\n      aws.private_ip_address = \"#{master_ip}\"\n      aws.tags = {\n        'Name' => \"kubernetes-master\"\n      }\n    end\n\n    config.vm.hostname = \"kubernetes-master\"\n    config.vm.provision \"shell\", inline: \"/vagrant/cluster/vagrant/provision-master.sh #{master_ip} #{num_minion} #{minion_ips_str}\"\n  end\n\n  # Kubernetes minion\n  num_minion.times do |n|\n\n    config.vm.define \"minion-#{n+1}\" do |minion|\n\n      minion_index = n+1\n      minion_ip = minion_ips[n]\n      # fix up the aws details for each individual minion\n      minion.vm.provider :aws do |aws|\n        aws.private_ip_address = \"#{minion_ip}\"\n        aws.tags = {\n          'Name' => \"kubernetes-minion-#{minion_index}\"\n        }\n      end\n\n      minion.vm.hostname = \"kubernetes-minion-#{minion_index}\"\n      minion.vm.provision \"shell\", inline: \"/vagrant/cluster/vagrant/provision-minion.sh #{master_ip} #{num_minion} #{minion_ips_str} #{minion_ip}\"\n    end\n  end\n\n  config.vm.synced_folder File.dirname(__FILE__), \"/vagrant\", type: \"rsync\"\nend\n\n# rsync --verbose --archive --delete -z --copy-links --no-owner --no-group --rsync-path sudo rsync -e ssh -t -p 22 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i '/Users/nickma/Downloads/nick-oregon.pem' --exclude .vagrant/ /usr/local/workspace/kubernetes/ fedora@54.69.29.170:/vagrant\n",
+			"fedora",
+			"vm.network",
+			"network",
+			"Solarized",
+			"\"\n",
+			"kube_box",
+			"\\t",
+			"__repr__",
+			"dCreate",
+			"asdasd",
+			" \n",
+			"\\n",
+			"computeInter"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"    ",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 88.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "coding-extension.sublime-project",
+	"replace":
+	{
+		"height": 40.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 944.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 224.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
