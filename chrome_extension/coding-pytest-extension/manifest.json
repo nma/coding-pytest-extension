@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Python Coding Test",
-  "description": "This posts a request at the testing service defined on heroku",
+  "description": "This posts a request at the testing service defined a port",
   "version": "1.0",
 
   "browser_action": {

@@ -7,3 +7,9 @@ $.get(chrome.extension.getURL('/template.html'), function(data) {
     console.log("some javascript for my plugin");
     $(data).appendTo('#wrapper');
 });
+
+$('#pycoding-extension-submit-form').submit(function( evt ) { 
+    evt.preventDefault();
+    console.log( "Handler for .submit() called." );
+    console.log( "" );
+}); 
