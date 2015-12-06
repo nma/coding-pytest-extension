@@ -1,37 +1,66 @@
+from multiprocessing.context import Process
+import unittest
+from requests.packages.urllib3.exceptions import NewConnectionError
 from compilation_builder.packager import PackagerConfig
 from compilation_builder.orchestrator import Orchestrator
 from test.base_test_case import BaseTestCase
-from werkzeug.wrappers import Request
-from multiprocessing import Process
-import unittest, os, json, requests
+import os
+import json
+import requests
+import time
+
+
+def exponential_back_off(func, limit=3):
+    def wrapped_method(*args, **kwargs):
+        cur_limit = 0
+        back_off_seconds = 2;
+        while cur_limit < limit:
+            try:
+                r = func(*args, **kwargs)
+                print(r)
+                if not r or r.status_code != 200:
+                    cur_limit += 1
+                    time.sleep(back_off_seconds)
+                    back_off_seconds <<= 1;
+                else:
+                    return r
+            except (NewConnectionError, ConnectionRefusedError):
+                cur_limit += 1
+                time.sleep(back_off_seconds)
+                back_off_seconds <<= 1;
+
+    return wrapped_method
+
 
 class TestOrchestrator(BaseTestCase):
 
-    @classmethod
-    def start_test_server(cls):
-        test_directory = os.path.dirname(os.path.realpath(__file__))
-        test_config = os.path.join(test_directory, "packager_config.cfg")
+    def setUp(self):
+        self.test_directory = os.path.dirname(os.path.realpath(__file__))
+        self.test_config = os.path.join(self.test_directory, "packager_config.cfg")
+        self.packager_config = PackagerConfig(self.test_config)
+        """Spin up a server in a seperate process"""
+        def start_test_server():
+            app = Orchestrator(self.packager_config)
+            from werkzeug.serving import run_simple
+            run_simple('127.0.0.1', 5000, app)
 
-        packager_config = PackagerConfig(test_config)
-        app = Orchestrator(packager_config)
-       
-        from werkzeug.serving import run_simple
-        run_simple('127.0.0.1', 5000, app)
+        self.p = Process(target=start_test_server, daemon=True)
+        self.p.start()
 
-    @classmethod
-    def setUpClass(cls):
-        """Spin up a server in a seperate process
-        """
-        cls.p = Process(target=cls.start_test_server, daemon=True)
-        cls.p.start()
-       
-    @classmethod
-    def tearDownClass(cls):
-        """Make sure we tear down the process properly at the end 
-        """
-        cls.p.terminate()
+    def tearDown(self):
+        """Make sure we tear down the process properly at the end"""
+        self.p.terminate()
 
     def testOrchestratorAcceptingInputCorrectly(self):
+        @exponential_back_off
+        def wait_for_process():
+            return requests.get("http://127.0.0.1:5000/health")
+
+        wait_seconds = 1
+        print("await process spin up for %d seconds" % wait_seconds)
+        time.sleep(wait_seconds)
+        wait_for_process()
+
         with open(self.get_file('code'), 'r') as code, open(self.get_file('tests'), 'r') as test:
             language = 'python'
             question_name = 'foo'

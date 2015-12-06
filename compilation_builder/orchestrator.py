@@ -4,14 +4,20 @@ from werkzeug.routing import Map, Rule
 from compilation_builder.packager import PythonPackager, PackagerException
 import json
 
+'''
+Control class for our little service
+'''
 class Orchestrator(object):
-
     def __init__(self, configs):
         self.configs = configs
         self.url_map = Map([
+            Rule('/health', endpoint='health'),
             Rule('/submit', endpoint='submit'),
             Rule('/getresult', endpoint='getresult')
         ])
+
+    def on_health(self, request):
+        return Response("I'm up and alive")
 
     def on_getresult(self, request):
         return Response("not implemented")

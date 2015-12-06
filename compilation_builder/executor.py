@@ -1,4 +1,5 @@
 import subprocess
+import docker
 
 
 class Executor(object):
@@ -21,8 +22,6 @@ class Executor(object):
             status = False
             if err:
                 err = err.decode("UTF-8")
-                #import re
-                #err = re.escape(err)
             else:
                 err = 'None'
             message = "Got Output: " + out + "Expected Output: " + test_io['output']  + " Errors: " + err
@@ -30,6 +29,6 @@ class Executor(object):
 
 
 class SandboxedExecutor(Executor):
-    
+    """Executor that uses a docker exec wrapper to execute programs"""
     def execute(self, codefile, test_io):
         pass
