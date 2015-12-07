@@ -8,6 +8,10 @@ import os
 import json
 import requests
 import time
+import logging
+
+
+logger = logging.getLogger(name=__name__)
 
 
 def exponential_back_off(func, limit=3):
@@ -17,7 +21,6 @@ def exponential_back_off(func, limit=3):
         while cur_limit < limit:
             try:
                 r = func(*args, **kwargs)
-                print(r)
                 if not r or r.status_code != 200:
                     cur_limit += 1
                     time.sleep(back_off_seconds)
@@ -28,6 +31,7 @@ def exponential_back_off(func, limit=3):
                 cur_limit += 1
                 time.sleep(back_off_seconds)
                 back_off_seconds <<= 1;
+                logger.warn("Timeout incrementing limit")
 
     return wrapped_method
 

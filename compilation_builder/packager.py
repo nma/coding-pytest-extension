@@ -4,7 +4,7 @@ import shutil
 import hashlib
 import yaml
 import subprocess
-from compilation_builder.executor import SandboxedExecutor, Executor
+from compilation_builder.executor import DockerExecutor, Executor
 
 class PackagerException(Exception):
     """I am a nicer looking exception
@@ -127,12 +127,10 @@ class Bundle(object):
 
 
 class PythonPackager(Packager):
-    """extension of the Packager class to support python execution
-    """
+    """extension of the Packager class to support python execution"""
 
     def execute(self, bundle):
-        """Given a key, locate the bundle in the storage system, and execute it.
-        """
+        """Given a key, locate the bundle in the storage system, and execute it."""
         test_cases_dict = Packager.parse_testcases(bundle)
         execution_response = {}
         for testcase, test_io in test_cases_dict.items():
@@ -146,8 +144,7 @@ class PythonPackager(Packager):
 
 
 class JavaPackager(Packager):
-    """TODO: build out java land
-    """
+    """TODO: build out java land"""
 
     def bundle(self, question_name, code_str, test_str, version=1):
         pass
