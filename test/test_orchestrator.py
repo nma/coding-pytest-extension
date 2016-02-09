@@ -1,5 +1,4 @@
 from multiprocessing.context import Process
-import unittest
 from requests.packages.urllib3.exceptions import NewConnectionError
 from compilation_builder.packager import PackagerConfig
 from compilation_builder.orchestrator import Orchestrator

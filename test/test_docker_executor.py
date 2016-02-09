@@ -1,4 +1,4 @@
-import yaml
+import docker
 from compilation_builder.packager import PythonPackager, Packager
 from compilation_builder.executor import DockerExecutor
 from test.base_test_case import BaseTestCase
@@ -18,6 +18,12 @@ class TestDockerExecutor(BaseTestCase):
         super().setUp()
         self.test_question_name = 'testy'
 
+    def test_simple_docker_command(self):
+        docker_host = os.getenv("DOCKER_HOST")
+        cli = docker.Client(base_url=docker_host)
+        cli.pull(repository="python", tag="3.5")
+
+    @unittest.skip
     def test_run_isolated_environment(self):
         ex = DockerExecutor()
         with open(self.get_file('code'), 'r') as code, open(self.get_file('tests'), 'r') as test:

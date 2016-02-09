@@ -38,7 +38,8 @@ class DockerExecutor(Executor):
         mem_limit = kwargs['mem_limit'] if 'mem_limit' in kwargs else '128m'
         host_config = self.cli.create_host_config(mem_limit=mem_limit)
         container = self.cli.create_container(image='python:3.5', host_config=host_config)
-        #container.start()
+        container.start()
+
         exec_id = self.cli.exec_create(container=container, cmd='python ' + codefile)
         out = self.cli.exec_start(exec_id)
 
