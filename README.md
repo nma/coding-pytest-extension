@@ -1,3 +1,5 @@
+![Travis CI](https://travis-ci.org/nma/coding-pytest-extension.svg?branch=master)
+
 # coding-pytest-extension
 A browser extension that lets me write and run unit tests in python for HackerRank questions.
 
