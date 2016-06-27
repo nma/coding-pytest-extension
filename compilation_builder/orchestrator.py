@@ -7,6 +7,8 @@ import json
 '''
 Control class for our little service
 '''
+
+
 class Orchestrator(object):
     def __init__(self, configs):
         self.configs = configs
@@ -37,13 +39,21 @@ class Orchestrator(object):
             if lang.lower() == 'python':
                 py_packager = PythonPackager(self.configs)
                 bundle = py_packager.bundle(question_name, code, test)
-                
+
                 execution_result = py_packager.execute(bundle)
             else:
-               raise PackagerException("Unexpected language type.")
+                raise PackagerException("Unexpected language type.")
 
-        got_data = {'language': lang, 'code': code, 'test': test, 'question_name': question_name}
-        response_payload = {'execution_result': execution_result, 'got_data': got_data}
+        got_data = {
+            'language': lang,
+            'code': code,
+            'test': test,
+            'question_name': question_name
+        }
+        response_payload = {
+            'execution_result': execution_result,
+            'got_data': got_data
+        }
         # dispatch_request expects any response object or throws an exception
         return Response(json.dumps(response_payload), mimetype='text/json')
 
@@ -64,6 +74,7 @@ class Orchestrator(object):
 
     def __call__(self, environ, start_response):
         return self.wsgi_app(environ, start_response)
+
 
 def create_app(program_configs=None):
     app = Orchestrator(program_configs)

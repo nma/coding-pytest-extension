@@ -16,20 +16,20 @@ logger = logging.getLogger(name=__name__)
 def exponential_back_off(func, limit=3):
     def wrapped_method(*args, **kwargs):
         cur_limit = 0
-        back_off_seconds = 2;
+        back_off_seconds = 2
         while cur_limit < limit:
             try:
                 r = func(*args, **kwargs)
                 if not r or r.status_code != 200:
                     cur_limit += 1
                     time.sleep(back_off_seconds)
-                    back_off_seconds <<= 1;
+                    back_off_seconds <<= 1
                 else:
                     return r
             except (NewConnectionError, ConnectionRefusedError):
                 cur_limit += 1
                 time.sleep(back_off_seconds)
-                back_off_seconds <<= 1;
+                back_off_seconds <<= 1
                 logger.warn("Timeout incrementing limit")
 
     return wrapped_method
@@ -39,7 +39,8 @@ class TestOrchestrator(BaseTestCase):
 
     def setUp(self):
         self.test_directory = os.path.dirname(os.path.realpath(__file__))
-        self.test_config = os.path.join(self.test_directory, "packager_config.cfg")
+        self.test_config = os.path.join(self.test_directory,
+                                        "packager_config.cfg")
         self.packager_config = PackagerConfig(self.test_config)
         """Spin up a server in a seperate process"""
         def start_test_server():
@@ -64,23 +65,40 @@ class TestOrchestrator(BaseTestCase):
         time.sleep(wait_seconds)
         wait_for_process()
 
-        with open(self.get_file('code'), 'r') as code, open(self.get_file('tests'), 'r') as test:
+        with open(self.get_file('code'), 'r') as code, \
+                open(self.get_file('tests'), 'r') as test:
             language = 'python'
             question_name = 'foo'
             code_payload = code.read()
             test_payload = test.read()
-            payload = {'question_name': question_name, 'language': language, 'code': code_payload, 'test': test_payload}
-           
-            # http:// required, requests library needs protocol scheme to connect
-            got_resp_raw = requests.post('http://127.0.0.1:5000/submit', data=payload)
+            payload = {
+                'question_name': question_name,
+                'language': language,
+                'code': code_payload,
+                'test': test_payload
+            }
+
+            # http:// required,
+            # requests library needs protocol scheme to connect
+            got_resp_raw = requests.post('http://127.0.0.1:5000/submit',
+                                         data=payload)
             got_resp = json.loads(got_resp_raw.text)
-            exp_data = {'language': language, 'code': code_payload, 'test': test_payload, 'question_name': question_name}
-            exp_response_message = 'not tested for in this testcase' 
-            exp_resp = {'execution_result': exp_response_message, 'got_data': exp_data}
+            exp_data = {
+                'language': language,
+                'code': code_payload,
+                'test': test_payload,
+                'question_name': question_name
+            }
+            exp_response_message = 'not tested for in this testcase'
+            exp_resp = {
+                'execution_result': exp_response_message,
+                'got_data': exp_data
+            }
 
             self.assertEqual(exp_resp['got_data'], got_resp['got_data'])
 
             # we just need to check if the result contains success
             for testcase, test_result in got_resp['execution_result'].items():
-                self.assertTrue(test_result['success'], \
-                        'testcase {} failure with message {}'.format(testcase, test_result['message']))
+                self.assertTrue(test_result['success'],
+                                'testcase {} failure with message {}'
+                                .format(testcase, test_result['message']))

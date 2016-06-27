@@ -6,6 +6,8 @@ import unittest
 import os
 
 
+@unittest.skipIf(os.getenv("DOCKER_HOST") is None,
+                 reason='No docker on machine')
 class TestDockerExecutor(BaseTestCase):
     """run a test on the basic sandbox isolation offered by our executor"""
 
@@ -23,10 +25,10 @@ class TestDockerExecutor(BaseTestCase):
         cli = docker.Client(base_url=docker_host)
         cli.pull(repository="python", tag="3.5")
 
-    @unittest.skip
     def test_run_isolated_environment(self):
         ex = DockerExecutor()
-        with open(self.get_file('code'), 'r') as code, open(self.get_file('tests'), 'r') as test:
+        with open(self.get_file('code'), 'r') as code, \
+                open(self.get_file('tests'), 'r') as test:
             bundle = self._make_bundle(code, test)
 
             code_file = bundle.code_file_path

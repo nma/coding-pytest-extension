@@ -1,6 +1,6 @@
-#QUESTION = "foo"
+#QUESTION = foo
 #VERSION = 1
-#KEY = "a231267a7324b146da0afcb839611e41"    
+#KEY = a231267a7324b146da0afcb839611e41
 ---
 testSimple:
     input:  |
