@@ -2,11 +2,19 @@ import docker
 from compilation_builder.packager import PythonPackager, Packager
 from compilation_builder.executor import DockerExecutor
 from test.base_test_case import BaseTestCase
+import subprocess
 import unittest
 import os
 
 
-@unittest.skipIf(os.getenv("DOCKER_HOST") is None,
+def docker_exists():
+    try:
+        subprocess.check_call('docker ps', shell=True)
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
+@unittest.skipIf(not docker_exists(),
                  reason='No docker on machine')
 class TestDockerExecutor(BaseTestCase):
     """run a test on the basic sandbox isolation offered by our executor"""
@@ -21,8 +29,7 @@ class TestDockerExecutor(BaseTestCase):
         self.test_question_name = 'testy'
 
     def test_simple_docker_command(self):
-        docker_host = os.getenv("DOCKER_HOST")
-        cli = docker.Client(base_url=docker_host)
+        cli = docker.Client()
         cli.pull(repository="python", tag="3.5")
 
     def test_run_isolated_environment(self):
@@ -38,7 +45,7 @@ class TestDockerExecutor(BaseTestCase):
             self.assertTrue(os.path.exists(test_file))
 
             test_cases_dict = Packager.parse_testcases(bundle)
-            _, test_io = next(iter(test_cases_dict.values()))
+            test_io = next(iter(test_cases_dict.values()))
             ex.execute(code_file, test_io)
 
     def test_run_out_of_memory(self):

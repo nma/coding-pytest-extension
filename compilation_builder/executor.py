@@ -12,7 +12,7 @@ class Executor(object):
                                 stdin=subprocess.PIPE,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE)
-        # retrieve the responses from the docker container
+        # retrieve the responses from the process
         # then parse them as normal
         proc.stdin.write(bytes(test_io['input'], 'UTF-8'))
         out, err = proc.communicate()
@@ -35,25 +35,40 @@ class DockerExecutor(Executor):
     def __init__(self):
         # instantiate a docker client
         super().__init__()
-        docker_host = os.getenv("DOCKER_HOST")
-        self.cli = docker.Client(base_url=docker_host)
+        self.cli = docker.Client()
 
     def execute(self, codefile, test_io, **kwargs):
+        self.cli.pull(repository="python", tag="3.5")
         mem_limit = kwargs['mem_limit'] if 'mem_limit' in kwargs else '128m'
-        host_config = self.cli.create_host_config(mem_limit=mem_limit)
+
+        f = open(codefile)
+        full_path = os.path.realpath(f.name)
+        f.close()
+        host_config = self.cli.create_host_config(mem_limit=mem_limit, binds=[
+            full_path + ':/tmp/payload'
+        ])
         container = self.cli.create_container(image='python:3.5',
-                                              host_config=host_config)
-        container.start()
+                                              host_config=host_config,
+                                              volumes="/tmp/payload",
+                                              command='python3 /tmp/payload < ' + test_io['input'])
 
-        exec_id = self.cli.exec_create(container=container,
-                                       cmd='python ' + codefile)
-        out = self.cli.exec_start(exec_id)
+        try:
+            self.cli.start(container=container['Id'])
 
-        if out == test_io['output']:
-            status = True
-            message = None
-        else:
-            status = False
-            message = "Got Output: " + out + \
-                      "Expected Output: " + test_io['output']
-        return {"success": status, "message": message}
+            proc = subprocess.Popen(['docker', 'logs', container['Id']],
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE)
+
+            out, err = proc.communicate()
+            out = out.decode("UTF-8")
+
+            if out == test_io['output']:
+                status = True
+                message = None
+            else:
+                status = False
+                message = "Got Output: " + out + \
+                          "Expected Output: " + test_io['output']
+            return {"success": status, "message": message}
+        finally:
+            self.cli.remove_container(container=container['Id'], v=True)
